@@ -75,7 +75,6 @@ def main():
     model = LinearRegression()
     
     # Load data
-    print("Loading data from CSV...")
     x_train, y_train, x_test, y_test = model.load_data()
     
     print(f"Training data shape: X={x_train.shape}, y={y_train.shape}")
@@ -85,10 +84,10 @@ def main():
     print("\nTraining the model")
     model.train(x_train, y_train)
     
-    print(f"Model trained! Slope: {model.slope:.4f}, Intercept: {model.intercept:.4f}")
+    print(f"Slope: {model.slope:.4f}, Intercept: {model.intercept:.4f}")
     
     # Make predictions on test data
-    print("\nMaking predictions...")
+    print("\nPredictions:")
     y_pred = model.predict(x_test)
     
     return model
