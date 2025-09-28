@@ -1,6 +1,10 @@
 #include "LinearRegression.h"
 #include <numeric>
 #include <cmath>
+#include <fstream>
+#include <sstream>
+#include <string>
+#include <tuple>
 
 // constructor
 LinearRegression::LinearRegression() 
@@ -9,6 +13,35 @@ LinearRegression::LinearRegression()
 
 //destructor, a c++ practise I dont use in python
 LinearRegression::~LinearRegression() {
+}
+
+std::tuple<std::vector<double>, std::vector<double>, std::vector<double>, std::vector<double>> 
+LinearRegression::load_data(const std::string& filename) {
+    std::ifstream file(filename);
+    std::vector<double> x_train, y_train, x_test, y_test;
+    std::string line;
+    
+    // skip header if exists
+    std::getline(file, line);
+    
+    while (std::getline(file, line)) {
+        std::stringstream ss(line);
+        std::string cell;
+        
+        std::getline(ss, cell, ',');
+        x_train.push_back(std::stod(cell));
+        
+        std::getline(ss, cell, ',');
+        y_train.push_back(std::stod(cell));
+        
+        std::getline(ss, cell, ',');
+        x_test.push_back(std::stod(cell));
+        
+        std::getline(ss, cell, ',');
+        y_test.push_back(std::stod(cell));
+    }
+    
+    return std::make_tuple(x_train, y_train, x_test, y_test);
 }
 
 // train function matching my python implementation
