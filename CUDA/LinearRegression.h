@@ -4,22 +4,22 @@
 
 class LinearRegression {
 public:
-    // Constructor - user can set learning rate
+    // constructor that sets up the learning rate for gradient descent optimization
     LinearRegression(float learning_rate = 0.01f);
     
-    // Training - user provides data
+    // train the linear regression model using cuda-accelerated gradient descent
     void train(const std::vector<float>& x_train, const std::vector<float>& y_train);
     
-    // Prediction - user gets results
+    // make predictions using the learned slope and intercept parameters
     std::vector<float> predict(const std::vector<float>& x_test);
     
-    // Getters - user can check results
+    // functions to inspect the learned parameters after training is complete
     float getSlope() const { return slope_; }
     float getIntercept() const { return intercept_; }
     bool isTrained() const { return is_trained_; }
 
 private:
-    // Internal state - only class can modify
+    // internal parameters that get learned during training and manage the models state
     float learning_rate_;
     float slope_;
     float intercept_;
