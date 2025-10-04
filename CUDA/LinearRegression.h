@@ -25,3 +25,6 @@ private:
     float intercept_;
     bool is_trained_;
 };
+
+
+
