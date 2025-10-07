@@ -4,6 +4,8 @@
 
 This repository showcases advanced implementations of classical Machine Learning algorithms, Neural Networks, and Graph Neural Networks built entirely from scratch using CUDA for GPU acceleration. The CUDA and C++ implementations demonstrate real-world high-performance computing applications, while Python serves as a reference implementation for understanding the underlying mathematics and logic.
 
+Expected Completion : 10th October, 2025
+
 ## Project Goals
 
 - **Primary Focus**: Master GPU programming with CUDA for ML acceleration
