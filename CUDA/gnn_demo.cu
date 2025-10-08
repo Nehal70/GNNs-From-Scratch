@@ -105,6 +105,9 @@ float calculateClassificationAccuracy(const std::vector<std::vector<float>>& Pre
         }
     }
     
+    return static_cast<float>(Correct) / Total;
+}
+
 // function to monitor gpu memory usage
 void printGPUMemoryUsage() {
     size_t FreeMemory, TotalMemory;
