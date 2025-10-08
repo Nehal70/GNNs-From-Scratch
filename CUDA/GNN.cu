@@ -578,7 +578,6 @@ void GNN::computeGraphGradients(const std::vector<std::vector<float>>& NodeFeatu
     
     // backpropagate through layers
     float* CurrentGrad = DGradOutput;
-    int CurrentDim = OutputDim_;
     
     // backprop through final layer
     cudaMalloc(&DGradWeights, LayerSizes_[LayerSizes_.size() - 2] * OutputDim_ * sizeof(float));
