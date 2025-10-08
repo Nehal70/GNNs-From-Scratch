@@ -172,7 +172,7 @@ void MatrixOps::subtract(const float* A, const float* B, float* C, int size) {
     cudaDeviceSynchronize();
 }
 
-void MatrixOps::addBias(const float* input, const float* bias, int size) {
+void MatrixOps::addBias(float* input, const float* bias, int size) {
     int blockSize = 256;
     int numBlocks = (size + blockSize - 1) / blockSize;
     

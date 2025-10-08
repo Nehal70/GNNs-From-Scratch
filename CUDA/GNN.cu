@@ -226,7 +226,7 @@ void GNN::forward(const std::vector<std::vector<float>>& NodeFeatures,
     }
     
     // allocate gpu memory
-    float *DFeatures, *DAdjacency, *DOutput, *DTemp;
+    float *DFeatures, *DAdjacency, *DOutput;
     cudaMalloc(&DFeatures, NumNodes * FeatureDim * sizeof(float));
     cudaMalloc(&DAdjacency, NumNodes * NumNodes * sizeof(float));
     cudaMalloc(&DOutput, NumNodes * OutputDim_ * sizeof(float));

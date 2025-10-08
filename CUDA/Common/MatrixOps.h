@@ -16,7 +16,7 @@ public:
     
     // basic arithmetic operations that happen element by element
     static void subtract(const float* A, const float* B, float* C, int size);
-    static void addBias(const float* input, const float* bias, int size);
+    static void addBias(float* input, const float* bias, int size);
     
     // functions for calculating loss and aggregating results across batches
     static void squaredError(const float* y_true, const float* y_pred, float* error, int size);
