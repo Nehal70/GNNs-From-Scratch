@@ -63,40 +63,29 @@ private:
 
     static std::vector<std::vector<double>> softmax(const std::vector<std::vector<double>>& Z);
 
-    static std::vector<std::vector<double>> matmul(const std::vector<std::vector<double>>& A,
-                                                   const std::vector<std::vector<double>>& B);
+    static std::vector<std::vector<double>> matmul(const std::vector<std::vector<double>>& A, const std::vector<std::vector<double>>& B);
 
-    static std::vector<std::vector<double>> matvecAdd(const std::vector<std::vector<double>>& A,
-                                                      const std::vector<double>& b);
+    static std::vector<std::vector<double>> matvecAdd(const std::vector<std::vector<double>>& A, const std::vector<double>& b);
 
     static std::vector<std::vector<double>> transpose(const std::vector<std::vector<double>>& A);
 
-    static std::vector<std::vector<double>> applyActivation(const std::vector<std::vector<double>>& Z,
-                                                            const std::string& activation);
+    static std::vector<std::vector<double>> applyActivation(const std::vector<std::vector<double>>& Z, const std::string& activation);
 
-    static std::vector<std::vector<double>> activationDerivativeFromActivated(const std::vector<std::vector<double>>& A,
-                                                                             const std::string& activation);
+    static std::vector<std::vector<double>> activationDerivativeFromActivated(const std::vector<std::vector<double>>& A, const std::string& activation);
 
-    static std::vector<std::vector<double>> hadamard(const std::vector<std::vector<double>>& A,
-                                                     const std::vector<std::vector<double>>& B);
+    static std::vector<std::vector<double>> hadamard(const std::vector<std::vector<double>>& A, const std::vector<std::vector<double>>& B);
 
     static std::vector<std::vector<double>> scalarMat(const std::vector<std::vector<double>>& A, double s);
 
-    static std::vector<std::vector<double>> add(const std::vector<std::vector<double>>& A,
-                                                const std::vector<std::vector<double>>& B);
+    static std::vector<std::vector<double>> add(const std::vector<std::vector<double>>& A, const std::vector<std::vector<double>>& B);
 
-    static std::vector<std::vector<double>> subtract(const std::vector<std::vector<double>>& A,
-                                                     const std::vector<std::vector<double>>& B);
+    static std::vector<std::vector<double>> subtract(const std::vector<std::vector<double>>& A, const std::vector<std::vector<double>>& B);
 
     // Loss function
-    double calculateLoss(const std::vector<std::vector<double>>& yTrue,
-                         const std::vector<std::vector<double>>& yPred) const;
+    double calculateLoss(const std::vector<std::vector<double>>& yTrue, const std::vector<std::vector<double>>& yPred) const;
 
     // Backpropagation function
-    void backward(const std::vector<std::vector<double>>& X,
-                  const std::vector<std::vector<double>>& y,
-                  const std::vector<std::vector<std::vector<double>>>& activationsAll,
-                  const std::vector<std::vector<std::vector<double>>>& zValuesAll);
+    void backward(const std::vector<std::vector<double>>& X, const std::vector<std::vector<double>>& y, const std::vector<std::vector<std::vector<double>>>& activationsAll, const std::vector<std::vector<std::vector<double>>>& zValuesAll);
 };
 
 
