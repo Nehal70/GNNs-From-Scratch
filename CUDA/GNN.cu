@@ -207,6 +207,15 @@ __global__ void sigmoidDerivativeKernel(const float* input, float* output, int s
     }
 }
 
+// cuda kernel for multiplying by 2 - used in MSE gradient computation
+__global__ void multiplyByTwoKernel(float* data, int size) {
+    int idx = blockIdx.x * blockDim.x + threadIdx.x;
+    
+    if (idx < size) {
+        data[idx] *= 2.0f;
+    }
+}
+
 // constructor that sets up the graph neural network with the specified architecture and hyperparameters
 GNN::GNN(int InputDim, const std::vector<int>& HiddenDims, int OutputDim, const std::string& TaskType, float LearningRate)
     : InputDim_(InputDim), HiddenDims_(HiddenDims), OutputDim_(OutputDim), TaskType_(TaskType), LearningRate_(LearningRate), IsTrained_(false) {
@@ -554,14 +563,15 @@ void GNN::computeGraphGradients(const std::vector<std::vector<float>>& NodeFeatu
             DPredictions, DLabels, DGradOutput, NumNodes, OutputDim_);
     } else if (TaskType_ == "regression") {
         // mse gradient: grad = 2 * (pred - true)
+        // use MatrixOps subtract method
+        MatrixOps::subtract(DPredictions, DLabels, DGradOutput, NumNodes * OutputDim_);
+        // multiply by 2 for MSE gradient
         int RegBlocks = (NumNodes * OutputDim_ + BlockSize - 1) / BlockSize;
-        subtractKernel<<<RegBlocks, BlockSize>>>(DPredictions, DLabels, DGradOutput, NumNodes * OutputDim_);
-        // multiply by 2
-        // (we'll implement this as a simple kernel or use existing operations)
+        multiplyByTwoKernel<<<RegBlocks, BlockSize>>>(DGradOutput, NumNodes * OutputDim_);
     } else if (TaskType_ == "property_prediction") {
         // sigmoid + binary cross-entropy gradient
-        int PropBlocks = (NumNodes * OutputDim_ + BlockSize - 1) / BlockSize;
-        subtractKernel<<<PropBlocks, BlockSize>>>(DPredictions, DLabels, DGradOutput, NumNodes * OutputDim_);
+        // use MatrixOps subtract method
+        MatrixOps::subtract(DPredictions, DLabels, DGradOutput, NumNodes * OutputDim_);
     }
     
     cudaDeviceSynchronize();
