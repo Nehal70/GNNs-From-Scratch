@@ -340,13 +340,13 @@ float GNN::calculateLoss(const std::vector<std::vector<float>>& predictions,
     int blockSize = 256;
     int numBlocks = (num_nodes + blockSize - 1) / blockSize;
     
-    if (task_type_ == "classification") {
+    if (TaskType_ == "classification") {
         crossEntropyLossKernel<<<numBlocks, blockSize>>>(
             d_predictions, d_labels, d_loss, num_nodes, pred_size);
-    } else if (task_type_ == "regression") {
+    } else if (TaskType_ == "regression") {
         mseLossKernel<<<numBlocks, blockSize>>>(
             d_predictions, d_labels, d_loss, num_nodes * pred_size);
-    } else if (task_type_ == "property_prediction") {
+    } else if (TaskType_ == "property_prediction") {
         binaryCrossEntropyLossKernel<<<numBlocks, blockSize>>>(
             d_predictions, d_labels, d_loss, num_nodes * pred_size);
     }
@@ -397,13 +397,13 @@ void GNN::train(const std::vector<std::vector<float>>& node_features,
         // 3. handle different loss functions properly
     }
     
-    is_trained_ = true;
+    IsTrained_ = true;
 }
 
 // use the trained gnn to predict node features or classifications
 std::vector<std::vector<float>> GNN::predict(const std::vector<std::vector<float>>& node_features,
                                             const std::vector<std::vector<float>>& adjacency_matrix) {
-    if (!is_trained_) {
+    if (!IsTrained_) {
         std::cout << "model not trained yet." << std::endl;
         return {};
     }
@@ -412,12 +412,6 @@ std::vector<std::vector<float>> GNN::predict(const std::vector<std::vector<float
     forward(node_features, adjacency_matrix, predictions);
     return predictions;
 }
-
-// functions to inspect the gnns current configuration and training state
-const std::vector<int>& GNN::getLayerSizes() const { return layer_sizes_; }
-const std::string& GNN::getTaskType() const { return task_type_; }
-float GNN::getLearningRate() const { return lr_; }
-bool GNN::isTrained() const { return is_trained_; }
 
 } // namespace CUDA_ML
 
