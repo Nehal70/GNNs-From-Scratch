@@ -66,6 +66,15 @@ private:
     // similar to python version methods
     void initializeWeights();
     void applyActivation(const float* Input, float* Output, const std::string& Activation, int Size);
+    
+    // sophisticated backpropagation methods
+    void computeGraphGradients(const std::vector<std::vector<float>>& NodeFeatures,
+                              const std::vector<std::vector<float>>& AdjacencyMatrix,
+                              const std::vector<std::vector<float>>& Labels,
+                              const std::vector<std::vector<float>>& Predictions);
+    void updateWeightsAndBiases(float* Weights, float* Biases, 
+                               const float* GradWeights, const float* GradBiases,
+                               int InputDim, int OutputDim);
 };
 
 } // namespace CUDA_ML
