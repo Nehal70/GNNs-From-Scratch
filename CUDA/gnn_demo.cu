@@ -4,6 +4,7 @@
 #include <vector>
 #include <random>
 #include <iomanip>
+#include <chrono>
 
 using namespace CUDA_ML;
 
@@ -104,7 +105,16 @@ float calculateClassificationAccuracy(const std::vector<std::vector<float>>& Pre
         }
     }
     
-    return static_cast<float>(Correct) / Total;
+// function to monitor gpu memory usage
+void printGPUMemoryUsage() {
+    size_t FreeMemory, TotalMemory;
+    cudaMemGetInfo(&FreeMemory, &TotalMemory);
+    
+    std::cout << "GPU Memory Usage:" << std::endl;
+    std::cout << "  Total Memory: " << TotalMemory / (1024 * 1024) << " MB" << std::endl;
+    std::cout << "  Free Memory: " << FreeMemory / (1024 * 1024) << " MB" << std::endl;
+    std::cout << "  Used Memory: " << (TotalMemory - FreeMemory) / (1024 * 1024) << " MB" << std::endl;
+    std::cout << std::endl;
 }
 
 int main() {
@@ -116,6 +126,12 @@ int main() {
     std::cout << "but uses gpu acceleration for faster computation on large graphs" << std::endl;
     std::cout << "=" << std::string(80, '=') << std::endl;
     std::cout << std::endl;
+    
+    // display gpu information
+    std::cout << "GPU INFORMATION:" << std::endl;
+    std::cout << "================" << std::endl;
+    Utils::printDeviceInfo();
+    printGPUMemoryUsage();
     
     // set random seed for reproducible results
     Utils::setRandomSeed(42);
@@ -145,7 +161,14 @@ int main() {
     GNN ClassificationGNN(FeatureDim, {8, 6}, NumClasses, "classification", 0.01f);
     
     std::cout << "training gnn for node classification..." << std::endl;
+    
+    // measure training time
+    auto StartTime = std::chrono::high_resolution_clock::now();
     ClassificationGNN.train(NodeFeatures, AdjacencyMatrix, ClassificationLabels, 50, true);
+    auto EndTime = std::chrono::high_resolution_clock::now();
+    auto TrainingTime = std::chrono::duration_cast<std::chrono::milliseconds>(EndTime - StartTime);
+    
+    std::cout << "training completed in " << TrainingTime.count() << " ms" << std::endl;
     
     // make predictions and calculate accuracy
     auto ClassificationPredictions = ClassificationGNN.predict(NodeFeatures, AdjacencyMatrix);
@@ -228,6 +251,16 @@ int main() {
     std::cout << "learning rate: 0.01" << std::endl;
     std::cout << "task types supported: classification, regression, property_prediction" << std::endl;
     std::cout << "gpu acceleration: enabled via cuda kernels" << std::endl;
+    std::cout << std::endl;
+    
+    std::cout << "=" << std::string(80, '=') << std::endl;
+    std::cout << "PERFORMANCE SUMMARY" << std::endl;
+    std::cout << "===================" << std::endl;
+    std::cout << "total nodes processed: " << NumNodes << std::endl;
+    std::cout << "features per node: " << FeatureDim << std::endl;
+    std::cout << "total training epochs: 150 (50 per task)" << std::endl;
+    std::cout << "gpu acceleration: enabled via cuda kernels" << std::endl;
+    std::cout << "memory management: automatic gpu allocation/deallocation" << std::endl;
     std::cout << std::endl;
     
     std::cout << "=" << std::string(80, '=') << std::endl;
