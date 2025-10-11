@@ -4,6 +4,8 @@
 
 This repository showcases advanced implementations of classical Machine Learning algorithms, Neural Networks, and Graph Neural Networks built entirely from scratch using CUDA for GPU acceleration. The CUDA and C++ implementations demonstrate real-world high-performance computing applications, while Python serves as a reference implementation for understanding the underlying mathematics and logic.
 
+Read this to learn more about this project : https://medium.com/@nehalsinghal77/learning-gnns-05dab59fccc3 
+
 Expected Completion : 10th October, 2025
 
 ## Project Goals
@@ -28,15 +30,12 @@ CUDA/
 ├── GNN.h                   # Graph convolution and aggregation algorithms
 ├── LinearRegression.cu     # Gradient descent optimization on GPU
 ├── LinearRegression.h      # Minimal dependencies, maximum performance
+└── gnn_demo.cu               # Graph learning demonstration
 ├── Common/
 │   ├── MatrixOps.cu         # Core matrix operations (GEMM, transposition, reductions)
 │   ├── MatrixOps.h          # High-performance linear algebra kernels
 │   ├── Utils.cu             # CUDA debugging, profiling, and validation utilities
 │   └── Utils.h              # Helper functions for data generation and evaluation
-└── Examples/
-    ├── neural_network_demo.cu    # End-to-end training example
-    ├── linear_regression_demo.cu # Simple regression showcase
-    └── gnn_demo.cu               # Graph learning demonstration
 ```
 
 ### **Python**
@@ -66,30 +65,6 @@ C++/
 
 ## Getting Started
 
-### **Prerequisites**
-```bash
-# CUDA Toolkit (12.0+ recommended)
-https://developer.nvidia.com/cuda-toolkit
-
-# Build tools
-sudo apt install build-essential cmake
-
-# Optional: Python environment
-pip install numpy matplotlib scikit-learn
-```
-
-### **Compilation**
-```bash
-cd CUDA
-make clean && make all
-
-# Run specific examples
-make run-linear     # Linear regression demo
-make run-neural     # Neural network demo  
-make run-gnn        # GNN demo
-make run-all        # All demos
-```
-
 ### **Google Colab Setup**
 ```python
 # Complete setup for Google Colab GPU
@@ -110,7 +85,7 @@ make run-all        # All demos
 ## Key Features
 
 ### **Neural Networks**
-- **GPU Acceleration**: 10-100x faster than CPU implementations
+- **GPU Acceleration**: Faster than CPU implementations
 - **Multiple Activations**: ReLU, Sigmoid, Tanh, Leaky ReLU, Softmax
 - **Advanced Training**: Backpropagation with momentum and regularization
 - **Batch Processing**: Efficient parallel computation across samples
@@ -128,16 +103,6 @@ make run-all        # All demos
 - **Gradient Descent**: CUDA-accelerated optimization
 - **Mini-batching**: Parallel gradient computation
 - **Real-time**: Sub-millisecond prediction times
-
-## Performance Benchmarks
-
-| Algorithm | Python (CPU) | C++ (CPU) | **CUDA (GPU)** | **Speedup** |
-|-----------|--------------|-----------|-----------------|-------------|
-| Neural Network Training | 45.2s | 12.8s | **0.8s** | **56.5x** |
-| Graph Convolution (1000 nodes) | 2.3s | 0.7s | **0.02s** | **115x** |
-| Linear Regression (1M samples) | 3.4s | 1.1s | **0.05s** | **68x** |
-| GNN Node Classification | 8.5s | 2.1s | **0.15s** | **56.7x** |
-| GNN Message Passing | 1.8s | 0.4s | **0.01s** | **180x** |
 
 ## GNN Task Types
 
@@ -180,17 +145,7 @@ This project serves as a foundation for understanding how machine learning algor
 - **HLS Pipeline Understanding**: Exploring the C++ to Verilog/VHDL translation process for FPGA deployment
 - **RTL Understanding**: Deep dive into how ML algorithms map to Register Transfer Level representations
 - **Custom ML Accelerators**: FPGA-based implementations of Machine Learning Algorithms.
-- **Energy Efficiency**: Exploration of FPGA-based ML inference for low-power applications.
-
-### **Long-term Goals**
-- **Distributed Training**: Multi-GPU and multi-node training capabilities
-- **AutoML**: Automated architecture search and hyperparameter optimization
-- **Mobile Deployment**: TensorRT and ONNX export capabilities
 
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-*Performance benchmarks run on NVIDIA RTX 4090. Your hardware may vary.*
