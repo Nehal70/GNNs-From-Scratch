@@ -6,7 +6,7 @@ This repository showcases advanced implementations of classical Machine Learning
 
 Read this to learn more about this project : https://medium.com/@nehalsinghal77/learning-gnns-05dab59fccc3 
 
-Expected Completion : 10th October, 2025
+Project Status : Completed.
 
 ## Project Goals
 
