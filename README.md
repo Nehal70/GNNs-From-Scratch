@@ -11,6 +11,7 @@ Expected Completion : 10th October, 2025
 - **Primary Focus**: Master GPU programming with CUDA for ML acceleration
 - **Performance**: Achieve significant speedup over CPU implementations locally
 - **Learning**: Build production-ready ML algorithms from first principles
+- **Implementation**: Provide from-scratch implementations that can be used as a reference or integrated into projects
 - **Learning**: Master C++ and CUDA programming for high-performance computing
 - **Learning**: Understand Graph Neural Networks and their GPU implementation strategies
 - **Learning**: Gain expertise in GPU programming and optimization techniques
@@ -39,17 +40,16 @@ CUDA/
     └── gnn_demo.cu               # Graph learning demonstration
 ```
 
-### **Python**
-Educational implementations focusing on clarity and mathematical understanding:
+### **Python** (Now installable as `gnns_ml` package)
+Educational and practical implementations that can be imported as a library:
 
 ```
-Python/
+gnns_ml/
+├── __init__.py              # Package initialization and exports
 ├── LinearRegression.py      # Clean gradient descent implementation
 ├── NeuralNetwork.py         # Multi-layer perceptron with backprop
 ├── GraphAlgorithms.py       # Classic graph algorithms (Dijkstra, Kruskal, Boruvka)
-├── GNN.py                   # Message-passing neural networks
-├── RNN.py                   # Recurrent neural networks (LSTM/GRU inspired)
-└── *.csv                    # Sample datasets for training
+└── GNN.py                   # Message-passing neural networks
 ```
 
 ### **C++**
@@ -66,19 +66,82 @@ C++/
 
 ## Getting Started
 
-### **Prerequisites**
+### **Installation**
+
+#### **Python Package (Recommended)**
+Install the library directly from the repository:
 ```bash
-# CUDA Toolkit (12.0+ recommended)
-https://developer.nvidia.com/cuda-toolkit
+# Clone the repository
+git clone https://github.com/Nehal70/GNNs-From-Scratch.git
+cd GNNs-From-Scratch
 
-# Build tools
-sudo apt install build-essential cmake
+# Install the package
+pip install .
 
-# Optional: Python environment
-pip install numpy matplotlib scikit-learn
+# Or install in development mode
+pip install -e .
 ```
 
-### **Compilation**
+Once installed, use in your projects:
+```python
+from gnns_ml import GNN, NeuralNetwork, LinearRegression
+
+# See examples/basic_usage_example.py for complete usage examples
+```
+
+#### **C++/CUDA Library**
+
+For C++ or CUDA usage:
+
+```bash
+# Build the library using CMake
+mkdir build && cd build
+cmake ..
+make
+
+# Install the library
+sudo make install
+
+# Or just build without installing
+make
+```
+
+Then use in your C++ projects:
+```cpp
+#include <gnns_ml/GNN.h>  // C++ version
+#include <gnns_ml/NeuralNetwork.h>
+
+using namespace CPP_ML;
+
+GNN gnn(4, {32, 16}, 3, "classification", 0.01f);
+gnn.train(node_features, adjacency_matrix, labels);
+```
+
+Or for CUDA projects:
+```cpp
+#include <gnns_ml/GNN.h>  // CUDA version
+#include <gnns_ml/NeuralNetwork.h>
+
+using namespace CUDA_ML;
+
+GNN gnn(4, {32, 16}, 3, "classification", 0.01f);
+gnn.train(node_features, adjacency_matrix, labels);
+```
+
+#### **Prerequisites**
+```bash
+# CUDA Toolkit (12.0+ recommended) - for CUDA builds
+https://developer.nvidia.com/cuda-toolkit
+
+# Build tools (for C++/CUDA builds)
+sudo apt install build-essential cmake
+
+# Python dependencies
+pip install numpy pandas
+```
+
+### **Compilation (Original Makefile)**
+For CUDA-specific compilation:
 ```bash
 cd CUDA
 make clean && make all
@@ -89,6 +152,24 @@ make run-neural     # Neural network demo
 make run-gnn        # GNN demo
 make run-all        # All demos
 ```
+
+### **Example Code**
+
+**Python:**
+```bash
+cd examples
+py basic_usage_example.py
+```
+
+**C++:**
+```bash
+# Build and run C++ library example
+cd build
+make cpp_library_example
+./bin/cpp_library_example
+```
+
+See `examples/` directory for all usage examples.
 
 ### **Google Colab Setup**
 ```python
@@ -110,7 +191,7 @@ make run-all        # All demos
 ## Key Features
 
 ### **Neural Networks**
-- **GPU Acceleration**: 10-100x faster than CPU implementations
+- **GPU Acceleration**: 20-50x faster than Python NumPy implementations
 - **Multiple Activations**: ReLU, Sigmoid, Tanh, Leaky ReLU, Softmax
 - **Advanced Training**: Backpropagation with momentum and regularization
 - **Batch Processing**: Efficient parallel computation across samples
@@ -119,7 +200,7 @@ make run-all        # All demos
 - **Node-Based Tasks**: Classification, Regression, Property Prediction
 - **Message Passing**: Sophisticated neighbor aggregation strategies
 - **Graph Convolution**: Custom kernels for graph convolutional layers
-- **GPU Acceleration**: 10-100x faster than CPU implementations
+- **GPU Acceleration**: 20-50x faster than CPU implementations
 - **Scalable**: Handle large graphs with millions of nodes
 - **Memory Efficient**: Optimized GPU memory management
 - **Task-Specific**: Different activations and loss functions per task type
@@ -131,13 +212,20 @@ make run-all        # All demos
 
 ## Performance Benchmarks
 
+**Note:** These are estimated performance improvements based on typical optimization characteristics. Actual benchmarks may vary by hardware.
+
 | Algorithm | Python (CPU) | C++ (CPU) | **CUDA (GPU)** | **Speedup** |
 |-----------|--------------|-----------|-----------------|-------------|
-| Neural Network Training | 45.2s | 12.8s | **0.8s** | **56.5x** |
-| Graph Convolution (1000 nodes) | 2.3s | 0.7s | **0.02s** | **115x** |
-| Linear Regression (1M samples) | 3.4s | 1.1s | **0.05s** | **68x** |
-| GNN Node Classification | 8.5s | 2.1s | **0.15s** | **56.7x** |
-| GNN Message Passing | 1.8s | 0.4s | **0.01s** | **180x** |
+| Neural Network Training | ~15.0s | ~4.5s | **~0.3s** | **~50x** |
+| Graph Convolution (100 nodes) | ~1.2s | ~0.6s | **~0.03s** | **~40x** |
+| Linear Regression (100K samples) | ~0.8s | ~0.35s | **~0.02s** | **~40x** |
+| GNN Node Classification | ~3.5s | ~1.2s | **~0.15s** | **~23x** |
+| Matrix Multiplication (512x512) | ~0.05s | ~0.02s | **~0.001s** | **~50x** |
+
+**Typical Speedup Factors:**
+- **C++ vs Python**: 2-5x (due to compiled code vs interpreted, with NumPy being highly optimized)
+- **CUDA vs Python**: 20-50x (depending on parallelizability and workload size)
+- **CUDA vs C++**: 5-15x (GPU parallelism advantage over CPU)
 
 ## GNN Task Types
 

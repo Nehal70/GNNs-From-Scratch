@@ -1,0 +1,7 @@
+# Include additional files in the package
+include README.md
+include LICENSE
+recursive-include examples *.py *.csv
+recursive-include CUDA *.cu *.h
+recursive-include C++ *.cpp *.h
+
