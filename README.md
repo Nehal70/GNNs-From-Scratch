@@ -4,7 +4,9 @@
 
 This repository showcases advanced implementations of classical Machine Learning algorithms, Neural Networks, and Graph Neural Networks built entirely from scratch using CUDA for GPU acceleration. The CUDA and C++ implementations demonstrate real-world high-performance computing applications, while Python serves as a reference implementation for understanding the underlying mathematics and logic.
 
-Expected Completion : 10th October, 2025
+Read this to learn more about this project : https://medium.com/@nehalsinghal77/learning-gnns-05dab59fccc3 
+
+Project Status : Completed.
 
 ## Project Goals
 
@@ -29,15 +31,12 @@ CUDA/
 ├── GNN.h                   # Graph convolution and aggregation algorithms
 ├── LinearRegression.cu     # Gradient descent optimization on GPU
 ├── LinearRegression.h      # Minimal dependencies, maximum performance
+└── gnn_demo.cu               # Graph learning demonstration
 ├── Common/
 │   ├── MatrixOps.cu         # Core matrix operations (GEMM, transposition, reductions)
 │   ├── MatrixOps.h          # High-performance linear algebra kernels
 │   ├── Utils.cu             # CUDA debugging, profiling, and validation utilities
 │   └── Utils.h              # Helper functions for data generation and evaluation
-└── Examples/
-    ├── neural_network_demo.cu    # End-to-end training example
-    ├── linear_regression_demo.cu # Simple regression showcase
-    └── gnn_demo.cu               # Graph learning demonstration
 ```
 
 ### **Python** (Now installable as `gnns_ml` package)
@@ -191,7 +190,7 @@ See `examples/` directory for all usage examples.
 ## Key Features
 
 ### **Neural Networks**
-- **GPU Acceleration**: 20-50x faster than Python NumPy implementations
+- **GPU Acceleration**: Faster than CPU implementations
 - **Multiple Activations**: ReLU, Sigmoid, Tanh, Leaky ReLU, Softmax
 - **Advanced Training**: Backpropagation with momentum and regularization
 - **Batch Processing**: Efficient parallel computation across samples
@@ -268,17 +267,7 @@ This project serves as a foundation for understanding how machine learning algor
 - **HLS Pipeline Understanding**: Exploring the C++ to Verilog/VHDL translation process for FPGA deployment
 - **RTL Understanding**: Deep dive into how ML algorithms map to Register Transfer Level representations
 - **Custom ML Accelerators**: FPGA-based implementations of Machine Learning Algorithms.
-- **Energy Efficiency**: Exploration of FPGA-based ML inference for low-power applications.
-
-### **Long-term Goals**
-- **Distributed Training**: Multi-GPU and multi-node training capabilities
-- **AutoML**: Automated architecture search and hyperparameter optimization
-- **Mobile Deployment**: TensorRT and ONNX export capabilities
 
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-*Performance benchmarks run on NVIDIA RTX 4090. Your hardware may vary.*
